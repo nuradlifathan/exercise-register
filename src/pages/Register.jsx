@@ -1,23 +1,20 @@
 import { useState } from "react"
+// import validator from "validator"
 import {
   Heading,
   Stack,
   Radio,
-  RadioGrup,
-  RadioInput,
+  RadioGroup, // for Password
   Text,
   Box,
   Flex,
   FormControl,
   FormLabel,
-  FormErrorMessage,
-  FormHelperText,
   Input,
   InputGroup,
   InputRightElement,
   Button,
   useDisclosure,
-  RadioGroup, // for Password
 } from "@chakra-ui/react"
 
 import {
@@ -36,6 +33,7 @@ const Register = () => {
   const { isOpen, onOpen, onClose } = useDisclosure() // open close modal
   const [username, setUsername] = useState("")
   const [email, setEmail] = useState("")
+  // const [emailError, setEmailError] = useState("")
   const [password, setPassword] = useState("")
   const [gender, setGender] = useState("")
 
@@ -45,7 +43,24 @@ const Register = () => {
     setPassword(password)
     setGender(gender)
     onOpen()
+
+    // function emailValidation() {
+    //   setEmail(email)
+    //   return /\S+@\S+\.\S+/.test(email)
+    // }
   }
+
+  // const emailValidation = (event) => {
+  //   setEmail(email)
+  //   var emailError = event.target.value
+
+  //   if (validator.isEmail(emailError)) {
+  //     setEmailError("Valid Email")
+  //   } else {
+  //     setEmailError("Enter Valid Email !")
+  //   }
+  // }
+
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box
@@ -75,9 +90,9 @@ const Register = () => {
         <FormControl isRequired>
           <FormLabel>Email</FormLabel>
           <Input
-            type="email"
-            // value={email}
-            onChange={(email) => setEmail(email.target.value)}
+            type="text"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
           />
         </FormControl>
 
@@ -99,12 +114,15 @@ const Register = () => {
           </InputGroup>
         </FormControl>
 
-        <RadioGroup onChange={setGender} value={gender}>
-          <Stack direction="row">
-            <Radio value="Male">Male</Radio>
-            <Radio value="Female">Female</Radio>
-          </Stack>
-        </RadioGroup>
+        <FormControl mt="5px">
+          <FormLabel>Gender</FormLabel>
+          <RadioGroup onChange={setGender} value={gender}>
+            <Stack direction="row">
+              <Radio value="Male">Male</Radio>
+              <Radio value="Female">Female</Radio>
+            </Stack>
+          </RadioGroup>
+        </FormControl>
 
         <Button
           type="submit"
@@ -128,6 +146,12 @@ const Register = () => {
               <Text>Password : {password}</Text>
               <Text>Gender : {gender}</Text>
             </ModalBody>
+
+            <ModalFooter>
+              <Button colorScheme="blackAlpha" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
           </ModalContent>
         </Modal>
 
